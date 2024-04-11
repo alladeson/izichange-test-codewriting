@@ -1,4 +1,14 @@
+{#{ form_start(form) }#}
+    {#{ form_widget(form) }#}
+{#{ form_end(form) }#}
+
+
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="form-group">
+        {{ form_row(form.name, {'attr': {'class': 'form-control', 'placeholder':'Entrer le nom du produit'}}) }}
+    </div>
+    <div class="form-group">
+        {{ form_row(form.priceHt, {'attr': {'class': 'form-control', 'placeholder':'Entrer le prix HT du produit'}}) }}
+    </div>
+    <button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

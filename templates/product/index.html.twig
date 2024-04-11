@@ -1,41 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product index{% endblock %}
+{% block title %}Liste des produits{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>PriceHt</th>
-                <th>CreationDate</th>
-                <th>DateUpdate</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.priceHt }}</td>
-                <td>{{ product.creationDate ? product.creationDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ product.dateUpdate ? product.dateUpdate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Liste des produits</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-primary" href="{{ path('app_product_new') }}"> 
+                    Ajouter Nouveau Produit
+                </a>
+            </div>
+            <div class="card-body">
+            
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Prix HT</th>
+                            <th>Créé le</th>
+                            <th>Modifié le</th>
+                            <th width="240px">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.priceHt }}</td>
+                            <td>{{ product.creationDate ? product.creationDate|date('d-m-Y H:i:s', 'Africa/Porto-Novo') : '' }}</td>
+                            <td>{{ product.dateUpdate ? product.dateUpdate|date('d-m-Y H:i:s', 'Africa/Porto-Novo') : '' }}</td>
+                            <td>
+                                <form method="post" action="{{ path('app_product_delete', {'id': product.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce produit ?');">
+                                    <a
+                                        class="btn btn-outline-info m-2"
+                                        href="{{ path('app_product_show', {'id': product.id}) }}">
+                                        Show
+                                    </a>
+                                    <a
+                                        class="btn btn-outline-success m-2"
+                                        href="{{ path('app_product_edit', {'id': product.id}) }}">
+                                        Edit
+                                    </a>      
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                                    <button class="btn btn-outline-danger">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="6">Aucun enregistrement trouvé</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
 
-    <a href="{{ path('app_product_new') }}">Create new</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
