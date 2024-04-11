@@ -1,4 +1,4 @@
-# Mon Projet de test "Codewriting Banckend Developer" en Symfony demandé par IZICHANGE
+# Mon Projet de test "Codewriting Backend Developer" en Symfony demandé par IZICHANGE
 
 Ce projet est une application Symfony conçue pour implémenter le CRUD (Create, Request, Update, Delete) pour pouvoir mettre à jour les données.
 
